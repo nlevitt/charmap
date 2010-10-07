@@ -4,8 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class JsonStringer
@@ -27,11 +26,11 @@ public class JsonStringer
 		{
 			return "'" + obj.toString().replace("'", "\\'") + "'";
 		}
-		else if (obj instanceof Collection)
+		else if (obj instanceof Collection<?>)
 		{
 			StringBuffer buf = new StringBuffer("[");
 			int i = 0;
-			for (Object o: (Collection) obj)
+			for (Object o: (Collection<?>) obj)
 			{
 				if (i != 0)
 					buf.append(",");
@@ -54,10 +53,10 @@ public class JsonStringer
 			buf.append("]");
 			return buf.toString();
 		}
-		else if (obj instanceof Map)
+		else if (obj instanceof Map<?,?>)
 		{
 			StringBuffer buf = new StringBuffer("{");
-			Map map = (Map) obj;
+			Map<?, ?> map = (Map<?,?>) obj;
 			Object[] keys = map.keySet().toArray();
 			for (int i = 0; i < keys.length; i++)
 			{

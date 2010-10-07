@@ -461,7 +461,7 @@ public class UnicodeInfo
 		{
 			for (CharInfo detail: data.values())
 			{
-				log.debug("detail.getCh()=" + getHexString(detail.getCh()) + " detail.getScript()=" + detail.getScript() + " detail.getGC()=" + detail.getGC());
+				// log.debug("detail.getCh()=" + getHexString(detail.getCh()) + " detail.getScript()=" + detail.getScript() + " detail.getGC()=" + detail.getGC());
 				if ((split[0].length() == 0 || (detail.getScript() != null && split[0].equals(detail.getScript())))
 							&& (split[1].length() == 0 || (detail.getGC() != null && detail.getGC().startsWith(split[1]))))
 					subset.addCharacter(detail.getCh());
