@@ -1,21 +1,21 @@
 package org.pseudorandom.unicode;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.List;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
 import org.pseudorandom.json.JsonStringer;
 
 public class DetailsService extends HttpServlet
 {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(DetailsService.class);
 
 	private class ResponseObject 
