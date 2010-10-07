@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+	<head>
+		<meta http-equiv='content-type' content='text/html;charset=utf-8'/>
+
+		<title> 
+			charmap.org
+		</title>
+
+		<style type='text/css'>
+			/* this one has to be first */
+			#chartable td              { cursor:pointer; border:1px solid #ccc; text-align:center; vertical-align:middle; }
+			html,body                  { font-family:sans-serif; padding:0; margin:0; }
+			h1,h2                      { margin:0; }
+			#top-left,#top-right,
+			#bottom-left,#bottom-right { padding:12px; position:absolute; width:51%; }
+			#top-left,#top-right       { top:0; height:82px; border-bottom:1px solid #aaa; background-color:#ddd; }
+			#bottom-left,#bottom-right { bottom:0; height:12px; border-top:1px solid #aaa; color:#333; background-color:#ddd; font-size:small; }
+			#top-left,#bottom-left     { text-align:left; left:0; }
+			#top-right,#bottom-right   { text-align:right; right:0; }
+			#top-content               { position:absolute; top:0; right:0; margin:12px; z-index:50; color:#333; font-size:small; border-spacing:3px; }
+			#content                   { padding:12px; background-color:#fff; position:absolute; top:108px; }
+			#chartable                 { border-collapse:separate; border-spacing:0; padding:0; border:1px solid #bbb; }
+			.empty                     { cursor:default !important; background-color:#eee; }
+			.row-header                { text-align:left; font-size:small; padding-right:6px; }
+			#search                    { margin:0; padding:0; padding-left:6px; }
+			#search-status             { }
+			#charmap                   { vertical-align:top; border:0; margin:0; padding:0; border-collapse:collapse; }
+			#bottom-content            { position:absolute; bottom:0; height:12px; padding:12px; z-index:50; white-space:nowrap; color:#333; font-size:small; }
+			#status                    { margin-left:36px; padding-left:36px; border-left:1px solid #999; }
+			#scroll-status             { margin-left:36px; padding-left:36px; border-left:1px solid #999; }
+			.button                    { border:1px solid #ddd; cursor:pointer; background-color:#ddd; } 
+			.button:hover              { border-style:outset !important; background-color:#eee; }
+			.button:active             { border-style:inset !important; background-color:#eee; }
+			.button img                { vertical-align:middle; }
+			.toolbar td                { vertical-align:top; padding:0 9px; }
+			#balloon                   { height:10em; width:25em; overflow:auto; }
+			#balloon-content           { padding:12px; }
+			/* #balloon-content *         { border:1px solid #f00; } */
+			#balloon-content ul,
+			#balloon-content ol        { margin-top:0; margin-bottom:0; }
+			#balloon-bigchar           { font-size:600%; float:right; padding:12px; }
+			#balloon table             { margin-top:1em; margin-bottom:1em; }
+			#balloon td                { border:1px dotted #aaa; padding:6px; vertical-align:top; }
+			#scrollbar                 { overflow:scroll; width:1em; height:100px; }
+			#scrollbar-insizer         { height:1000px; }
+			#log                       { z-index:200; overflow:scroll; position:absolute; border:1px solid #000; top:60px; left:60px; right:60px; bottom:60px; background-color:#ddd; font-family:monospace; }
+			#log div                   { font-size:small; border-bottom:1px dotted #000; }
+			#toggleLog                 { border:1px solid #ddd; cursor:pointer; padding:6px; } 
+			#toggleLog:hover           { border-style:outset; }
+			#toggleLog:active          { border-style:inset; }
+			#top-left img              { border:1px solid #aaa; }
+			select,input               { border-width:1px; }
+			/* input[type='text']         { padding:1px 3px; } */
+			.underline                 { text-decoration:underline; }
+		</style>
+
+		<script type='text/javascript' src='util.js'></script>
+		<script type='text/javascript' src='main.js'></script>
+		<script type='text/javascript' src='http.js'></script>
+		<script type='text/javascript' src='charmap.js'></script>
+		<script type='text/javascript' src='chartable.js'></script>
+		<script type='text/javascript' src='scrollbar.js'></script>
+		<script type='text/javascript' src='balloon.js'></script>
+	</head>
+
+	<body onload='initialize()'>
+
+		<div id='top-left'>
+			<img src='charmap-org-logo.jpg' alt='charmap.org' height='77' width='262' />
+		</div>
+		<div id='top-right'>
+		</div>
+
+		<div id='top-content'>
+			<form id='search' method='get' action='#' onsubmit='findNext(this.query.value); return false;'>
+				<table class='toolbar'>
+					<tr>
+						<td>
+							<!-- <div> Font </div> -->
+							<select id='font' name='font' onchange='setFont(this.value);'>
+								<optgroup label='CSS Generic Fonts'>
+									<option>Cursive</option>
+									<option>Fantasy</option>
+									<option>Monospace</option>
+									<option selected='selected'>Sans Serif</option>
+									<option>Serif</option>
+								</optgroup>
+								<optgroup label='Other Fonts'>
+									<option>Arial</option>
+									<option>Bitstream Vera Sans</option>
+									<option>Bitstream Vera Sans Mono</option>
+									<option>Bitstream Vera Serif</option>
+									<option>Code2000</option>
+									<option>Comic</option>
+									<option>Courier</option>
+									<option>Courier New</option>
+									<option>Futura</option>
+									<option>Garamond</option>
+									<option>Geneva</option>
+									<option>Georgia</option>
+									<option>Helvetica</option>
+									<option>Monaco</option>
+									<option>MS Gothic</option>
+									<option>MS Mincho</option>
+									<option>Optima</option>
+									<option>Lucida Grande</option>
+									<option>Lucida Sans</option>
+									<option>Tahoma</option>
+									<option>Times</option>
+									<option>Times New Roman</option>
+									<option>Verdana</option>
+								</optgroup>
+							</select>
+						</td>
+						<td class='button' id='bold-button' style='font-weight:bold;' onclick='toggleBold(this)'>
+							<img src='format-text-bold.png' alt='' /> 
+							<span class='underline'>B</span>old
+						</td>
+						<td class='button' id='italic-button' style='font-style:italic;' onclick='toggleItalic(this)'>
+							<img src='format-text-italic.png' alt='' /> 
+							<span class='underline'>I</span>talic
+						</td>
+						<td class='button' id='bigger-button' style='font-size:120%;' onclick='bigger()'>
+							<img src='zoom-in-26.png' alt='' /> 
+							<span class='underline'>+</span> Bigger
+						</td>
+						<td class='button' id='smaller-button' style='font-size:90%;' onclick='smaller()'>
+							<img src='zoom-out-26.png' alt='' />
+							<span class='underline'>-</span> Smaller
+						</td>
+					</tr>
+				</table>
+
+				<table class='toolbar'>
+					<tr>
+						<td>
+							<div>
+								<b> <span class='underline'>S</span>earch </b>
+							</div>
+							<div>
+								<input id='search-input' type='text' name='query' size='25' /> 
+								<!--
+								<input type='submit' value='find next' />
+								-->
+								<button type='submit'> find <span class='underline'>n</span>ext </button>
+							</div>
+							<div id='search-status'> 
+								&nbsp;
+							</div>
+						</td>
+						<!--
+						<td style='vertical-align:bottom;'>
+							<div class='button' style='padding:3px 6px;'> 
+								Find <span class='underline'>N</span>ext 
+							</div>
+						</td>
+						-->
+						<td>
+							<div>
+								<b> <span class='underline'>V</span>iew </b>
+							</div>
+							<select id='view' name='view' onchange='changeView(this.value); return false;'>
+								<!--
+								<optgroup label='Not Regular Scripts'>
+									<option name='Common'>Common</option>
+									<option name='Inherited'>Inherited</option>
+								</optgroup>
+								-->
+								<optgroup label='Special Characters'>
+									<option name='Punctuation' value=';P;'>Punctuation</option>
+									<option name='Modifier Symbols' value=';Sk;'>Modifier Symbols</option> 
+									<option name='Formatting Characters' value=';Cf;'>Formatting Characters</option> 
+									<option name='Decimal Digits' value=';Nd;'>Decimal Digits</option>
+									<option name='Numeral Letters' value=';Nl;'>Numeral Letters</option>
+									<option name='Other Numerics' value=';No;'>Other Numerics</option>
+									<option name='Math Symbols' value=';Sm;'>Math Symbols</option>
+									<option name='Currency Symbols' value=';Sc;'>Currency Symbols</option> 
+									<option name='Miscellaneous Symbols' value=';So;0000..00FF,2100..27FF,2B00..2BFF'>Miscellaneous Symbols</option>
+									<option name='East Asian Symbols' value=';So;3000..4DFF'>East Asian Symbols</option>
+									<!-- <option name='Other Symbols' value='*;So'>Other Symbols</option> -->
+									<option name='Spacing Characters' value=';Z;'>Spacing Characters</option> 
+									<option name='Diacritical Marks' value='Inherited;Mn;'>Diacritical Marks</option> 
+									<option name='Enclosing Marks' value='*;Me;'>Enclosing Marks</option> 
+									<option name='Musical Symbols' value=';;1D100..1D1FF'>Musical Symbols</option>
+									<option name='Archaic Musical Symbols' value=';;1D000..1D0FF,1D200..1D24F'>Archaic Musical Symbols</option>
+									<option name='Private Use' value=';;E000..F8FF,F0000..FFFFF,100000..10FFFF'>Private Use</option>
+									<option name='Control Characters' value=';Cc;'>Control Characters</option>
+								</optgroup>
+								<optgroup label='Written Scripts'>
+									<option name='Archaic Writing Systems' value=';;10000..103DF,10800..1247F,1D300..1D35F'>Archaic Writing Systems</option>
+									<option name='Arabic' value='Arabic;;'>Arabic</option>
+									<option name='Armenian' value='Armenian;;'>Armenian</option>
+									<option name='Balinese' value='Balinese;;'>Balinese</option>
+									<option name='Bengali' value='Bengali;;'>Bengali</option>
+									<option name='Bopomofo' value='Bopomofo;;'>Bopomofo</option>
+									<option name='Braille' value='Braille;;'>Braille</option>
+									<option name='Buginese' value='Buginese;;'>Buginese</option>
+									<option name='Buhid' value='Buhid;;'>Buhid</option>
+									<option name='Canadian Aboriginal' value='Canadian Aboriginal;;'>Canadian Aboriginal</option>
+									<option name='Cherokee' value='Cherokee;;'>Cherokee</option>
+									<option name='Coptic' value='Coptic;;'>Coptic</option>
+									<option name='Cuneiform' value='Cuneiform;;'>Cuneiform</option>
+									<option name='Cypriot' value='Cypriot;;'>Cypriot</option>
+									<option name='Cyrillic' value='Cyrillic;;'>Cyrillic</option>
+									<option name='Deseret' value='Deseret;;'>Deseret</option>
+									<option name='Devanagari' value='Devanagari;;'>Devanagari</option>
+									<option name='Ethiopic' value='Ethiopic;;'>Ethiopic</option>
+									<option name='Georgian' value='Georgian;;'>Georgian</option>
+									<option name='Glagolitic' value='Glagolitic;;'>Glagolitic</option>
+									<option name='Gothic' value='Gothic;;'>Gothic</option>
+									<option name='Greek' value='Greek;;'>Greek</option>
+									<option name='Gujarati' value='Gujarati;;'>Gujarati</option>
+									<option name='Gurmukhi' value='Gurmukhi;;'>Gurmukhi</option>
+									<option name='Han' value='Han;;'>Han</option>
+									<option name='Hangul' value='Hangul;;'>Hangul</option>
+									<option name='Hanunoo' value='Hanunoo;;'>Hanunoo</option>
+									<option name='Hebrew' value='Hebrew;;'>Hebrew</option>
+									<option name='Hiragana' value='Hiragana;;'>Hiragana</option>
+									<option name='Kannada' value='Kannada;;'>Kannada</option>
+									<option name='Katakana' value='Katakana;;'>Katakana</option>
+									<option name='Kharoshthi' value='Kharoshthi;;'>Kharoshthi</option>
+									<option name='Khmer' value='Khmer;;'>Khmer</option>
+									<option name='Lao' value='Lao;;'>Lao</option>
+									<option name='Latin' value='Latin;;' selected='selected'>Latin</option>
+									<option name='Limbu' value='Limbu;;'>Limbu</option>
+									<option name='Linear B' value='Linear B;;'>Linear B</option>
+									<option name='Malayalam' value='Malayalam;;'>Malayalam</option>
+									<option name='Mongolian' value='Mongolian;;'>Mongolian</option>
+									<option name='Myanmar' value='Myanmar;;'>Myanmar</option>
+									<option name='New Tai Lue' value='New Tai Lue;;'>New Tai Lue</option>
+									<option name='Nko' value='Nko;;'>Nko</option>
+									<option name='Ogham' value='Ogham;;'>Ogham</option>
+									<option name='Old Italic' value='Old Italic;;'>Old Italic</option>
+									<option name='Old Persian' value='Old Persian;;'>Old Persian</option>
+									<option name='Oriya' value='Oriya;;'>Oriya</option>
+									<option name='Osmanya' value='Osmanya;;'>Osmanya</option>
+									<option name='Phags Pa' value='Phags Pa;;'>Phags Pa</option>
+									<option name='Phoenician' value='Phoenician;;'>Phoenician</option>
+									<option name='Runic' value='Runic;;'>Runic</option>
+									<option name='Shavian' value='Shavian;;'>Shavian</option>
+									<option name='Sinhala' value='Sinhala;;'>Sinhala</option>
+									<option name='Syloti Nagri' value='Syloti Nagri;;'>Syloti Nagri</option>
+									<option name='Syriac' value='Syriac;;'>Syriac</option>
+									<option name='Tagalog' value='Tagalog;;'>Tagalog</option>
+									<option name='Tagbanwa' value='Tagbanwa;;'>Tagbanwa</option>
+									<option name='Tai Le' value='Tai Le;;'>Tai Le</option>
+									<option name='Tamil' value='Tamil;;'>Tamil</option>
+									<option name='Telugu' value='Telugu;;'>Telugu</option>
+									<option name='Thaana' value='Thaana;;'>Thaana</option>
+									<option name='Thai' value='Thai;;'>Thai</option>
+									<option name='Tibetan' value='Tibetan;;'>Tibetan</option>
+									<option name='Tifinagh' value='Tifinagh;;'>Tifinagh</option>
+									<option name='Ugaritic' value='Ugaritic;;'>Ugaritic</option>
+									<option name='Yi' value='Yi;;'>Yi</option>
+								</optgroup>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+		<div id='content'>
+			<table id='charmap'>
+				<tr>
+					<td>
+						<table id='chartable' cellspacing='0'>
+							<tr> <td> </td> </tr>
+						</table>
+					</td>
+					<td><div id='scrollbar'><div id='scrollbar-insizer'></div></div></td>
+					<td>&nbsp;</td>
+					<td> <!--  style='overflow:clip;' -->
+						<div id='balloon'>
+							<div id='balloon-bigchar'> </div>
+							<div id='balloon-content'> 
+								<h2> Welcome to charmap.org. </h2>
+								<p> Browse characters in the table, or search for a character above. </p>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id='bottom-left'>
+		</div>
+		<div id='bottom-right'>
+			<span> (c) 2007 <a href='http://pseudorandom.org/'>pseudorandom &amp; sons</a> </span>
+		</div>
+		<div id='bottom-content'>
+			<!--
+			<span> click on a character for detailed information </span>
+			-->
+			<span id='toggleLog' onclick='toggleLog(this)'> show/hide log </span>
+
+			<span id='status'> &nbsp; </span>
+			<!--
+			<span id='scroll-status'> &nbsp; </span>
+			-->
+		</div>
+
+		<div id='log' style='display:none;'>
+		</div>
+
+	</body>
+
+</html>
+
