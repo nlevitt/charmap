@@ -226,72 +226,6 @@
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<!--
-									<option name='Arabic' value='Arabic;;'>Arabic</option>
-									<option name='Armenian' value='Armenian;;'>Armenian</option>
-									<option name='Balinese' value='Balinese;;'>Balinese</option>
-									<option name='Bengali' value='Bengali;;'>Bengali</option>
-									<option name='Bopomofo' value='Bopomofo;;'>Bopomofo</option>
-									<option name='Braille' value='Braille;;'>Braille</option>
-									<option name='Buginese' value='Buginese;;'>Buginese</option>
-									<option name='Buhid' value='Buhid;;'>Buhid</option>
-									<option name='Canadian Aboriginal' value='Canadian Aboriginal;;'>Canadian Aboriginal</option>
-									<option name='Cherokee' value='Cherokee;;'>Cherokee</option>
-									<option name='Coptic' value='Coptic;;'>Coptic</option>
-									<option name='Cuneiform' value='Cuneiform;;'>Cuneiform</option>
-									<option name='Cypriot' value='Cypriot;;'>Cypriot</option>
-									<option name='Cyrillic' value='Cyrillic;;'>Cyrillic</option>
-									<option name='Deseret' value='Deseret;;'>Deseret</option>
-									<option name='Devanagari' value='Devanagari;;'>Devanagari</option>
-									<option name='Ethiopic' value='Ethiopic;;'>Ethiopic</option>
-									<option name='Georgian' value='Georgian;;'>Georgian</option>
-									<option name='Glagolitic' value='Glagolitic;;'>Glagolitic</option>
-									<option name='Gothic' value='Gothic;;'>Gothic</option>
-									<option name='Greek' value='Greek;;'>Greek</option>
-									<option name='Gujarati' value='Gujarati;;'>Gujarati</option>
-									<option name='Gurmukhi' value='Gurmukhi;;'>Gurmukhi</option>
-									<option name='Han' value='Han;;'>Han</option>
-									<option name='Hangul' value='Hangul;;'>Hangul</option>
-									<option name='Hanunoo' value='Hanunoo;;'>Hanunoo</option>
-									<option name='Hebrew' value='Hebrew;;'>Hebrew</option>
-									<option name='Hiragana' value='Hiragana;;'>Hiragana</option>
-									<option name='Kannada' value='Kannada;;'>Kannada</option>
-									<option name='Katakana' value='Katakana;;'>Katakana</option>
-									<option name='Kharoshthi' value='Kharoshthi;;'>Kharoshthi</option>
-									<option name='Khmer' value='Khmer;;'>Khmer</option>
-									<option name='Lao' value='Lao;;'>Lao</option>
-									<option name='Latin' value='Latin;;' selected='selected'>Latin</option>
-									<option name='Limbu' value='Limbu;;'>Limbu</option>
-									<option name='Linear B' value='Linear B;;'>Linear B</option>
-									<option name='Malayalam' value='Malayalam;;'>Malayalam</option>
-									<option name='Mongolian' value='Mongolian;;'>Mongolian</option>
-									<option name='Myanmar' value='Myanmar;;'>Myanmar</option>
-									<option name='New Tai Lue' value='New Tai Lue;;'>New Tai Lue</option>
-									<option name='Nko' value='Nko;;'>Nko</option>
-									<option name='Ogham' value='Ogham;;'>Ogham</option>
-									<option name='Old Italic' value='Old Italic;;'>Old Italic</option>
-									<option name='Old Persian' value='Old Persian;;'>Old Persian</option>
-									<option name='Oriya' value='Oriya;;'>Oriya</option>
-									<option name='Osmanya' value='Osmanya;;'>Osmanya</option>
-									<option name='Phags Pa' value='Phags Pa;;'>Phags Pa</option>
-									<option name='Phoenician' value='Phoenician;;'>Phoenician</option>
-									<option name='Runic' value='Runic;;'>Runic</option>
-									<option name='Shavian' value='Shavian;;'>Shavian</option>
-									<option name='Sinhala' value='Sinhala;;'>Sinhala</option>
-									<option name='Syloti Nagri' value='Syloti Nagri;;'>Syloti Nagri</option>
-									<option name='Syriac' value='Syriac;;'>Syriac</option>
-									<option name='Tagalog' value='Tagalog;;'>Tagalog</option>
-									<option name='Tagbanwa' value='Tagbanwa;;'>Tagbanwa</option>
-									<option name='Tai Le' value='Tai Le;;'>Tai Le</option>
-									<option name='Tamil' value='Tamil;;'>Tamil</option>
-									<option name='Telugu' value='Telugu;;'>Telugu</option>
-									<option name='Thaana' value='Thaana;;'>Thaana</option>
-									<option name='Thai' value='Thai;;'>Thai</option>
-									<option name='Tibetan' value='Tibetan;;'>Tibetan</option>
-									<option name='Tifinagh' value='Tifinagh;;'>Tifinagh</option>
-									<option name='Ugaritic' value='Ugaritic;;'>Ugaritic</option>
-									<option name='Yi' value='Yi;;'>Yi</option>
-									-->
 								</optgroup>
 							</select>
 						</td>
@@ -333,7 +267,7 @@
 			<!-- wtf man -->
 		</div>
 		<div id='bottom-right'>
-			<span> (c) 2007 <a href='http://pseudorandom.org/'>pseudorandom &amp;amp; sons</a> </span>
+			<span> (c) 2007,2010 <a href='http://pseudorandom.org/'>pseudorandom &amp;amp; sons</a> </span>
 		</div>
 		<div id='bottom-content'>
 			<!--
