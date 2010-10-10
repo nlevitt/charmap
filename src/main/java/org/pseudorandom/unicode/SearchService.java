@@ -1,23 +1,22 @@
 package org.pseudorandom.unicode;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
 import org.pseudorandom.json.JsonStringer;
 
 public class SearchService extends HttpServlet
 {
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(SearchService.class);
 
 	private UnicodeInfo unic;

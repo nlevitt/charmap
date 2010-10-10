@@ -198,11 +198,13 @@ function Charmap()
 	{
 		log('charmap.doJump() ch=' + ch + ' detail=' + detail);
 
+		/*
 		if (view != detail.script)
 		{
 			view = detail.script;
 			onViewChange(view);
 		}
+		*/
 
 		if (!chartable.isVisible(ch))
 		{
