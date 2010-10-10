@@ -21,7 +21,7 @@ public class DetailsService extends HttpServlet
 	private class ResponseObject 
 	{ 
 		int viewCharCount; 
-		Collection<Integer> characters;
+		@SuppressWarnings("unused") Collection<Integer> characters;
 		Map<Integer,CharInfo> details;
 
 		ResponseObject(int viewCharCount, Collection<Integer> characters, Map<Integer,CharInfo> details)

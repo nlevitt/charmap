@@ -288,9 +288,9 @@ public class UnicodeInfo
 
 	/* constants for hangul (de)composition, see UAX #15 */
 	private static final int SBase  = 0xAC00;
-	// private static final int LBase  = 0x1100;
-	// private static final int VBase  = 0x1161;
-	// private static final int TBase  = 0x11A7;
+	private static final int LBase  = 0x1100;
+	private static final int VBase  = 0x1161;
+	private static final int TBase  = 0x11A7;
 	private static final int LCount = 19;
 	private static final int VCount = 21;
 	private static final int TCount = 28;
@@ -323,9 +323,10 @@ public class UnicodeInfo
 			debug_incrementGcCount("Lo");
 			getData(ch).setCC(0);
 		}
+		
 		for (int ch = 0xac00; ch <= 0xd7a3; ch++)
 		{
-			// compute hangul syllable name as per UAX #15
+			// compute hangul syllable name and decomposition as per UAX #15
 			int SIndex = ch - SBase;
 			int LIndex, VIndex, TIndex;
 
@@ -336,13 +337,17 @@ public class UnicodeInfo
 			VIndex = (SIndex % NCount) / TCount;
 			TIndex = SIndex % TCount;
 
+			getData(ch).setNlColon(new Integer[] {LBase + LIndex, VBase + VIndex, TBase + TIndex});
 			getData(ch).setName("HANGUL SYLLABLE " + JAMO_L_TABLE[LIndex] + JAMO_V_TABLE[VIndex] + JAMO_T_TABLE[TIndex]);
 			// log.debug("U+" + getHexString(ch) + " " + getData(ch).getName() + " LIndex=" + LIndex + " VIndex=" + VIndex + " TIndex=" + TIndex);
 
 			getData(ch).setGC("Lo");
 			debug_incrementGcCount("Lo");
 			getData(ch).setCC(0);
+			
 		}
+		
+
 	}
 
 	private HashMap<String,Integer> debug_gcCounts;
