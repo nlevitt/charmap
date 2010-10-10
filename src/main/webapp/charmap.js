@@ -114,11 +114,6 @@ function Charmap()
 						searchStatusElement.innerHTML = (response.result.index+1) + ' of ' + response.count;
 					details[response.result.ch] = response.result.detail;
 
-					/*
-					view = response.result.view;
-					onViewChange(view);
-					*/
-
 					jump(response.result.ch, true);
 				}
 				else if (setSearchStatus)
@@ -172,7 +167,7 @@ function Charmap()
 			log('charmap.moveActiveCh() [1] chartable.getActiveCh()=' + chartable.getActiveCh() + ' calling jump() chartable.getFirstCh()=' + chartable.getFirstCh());
 			jump(chartable.getFirstCh(), false);
 		}
-		else if (chartable.getActiveChIndex() != -1 && chartable.getCharacter(chartable.getActiveChIndex() + n))
+		else if (chartable.getActiveChIndex() != -1 && chartable.getCharacter(chartable.getActiveChIndex() + n) != undefined)
 		{
 			log('charmap.moveActiveCh() [2] calling jump() chartable.getCharacter(chartable.getActiveChIndex()+n)=' + chartable.getCharacter(chartable.getActiveChIndex()+n));
 			jump(chartable.getCharacter(chartable.getActiveChIndex() + n), false);
