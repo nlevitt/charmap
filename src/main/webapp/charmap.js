@@ -113,6 +113,10 @@ function Charmap()
 					if (setSearchStatus)
 						searchStatusElement.innerHTML = (response.result.index+1) + ' of ' + response.count;
 					details[response.result.ch] = response.result.detail;
+
+					view = response.result.view;
+					onViewChange(view);
+
 					jump(response.result.ch, response.result.detail);
 				}
 				else if (setSearchStatus)
@@ -197,14 +201,6 @@ function Charmap()
 	var doJump = function (ch,detail)
 	{
 		log('charmap.doJump() ch=' + ch + ' detail=' + detail);
-
-		/*
-		if (view != detail.script)
-		{
-			view = detail.script;
-			onViewChange(view);
-		}
-		*/
 
 		if (!chartable.isVisible(ch))
 		{

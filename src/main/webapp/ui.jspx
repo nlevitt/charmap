@@ -215,6 +215,18 @@
 								</optgroup>
 								<optgroup label='Written Scripts'>
 									<option name='Archaic Writing Systems' value=';;10000..103DF,10800..1247F,1D300..1D35F'>Archaic Writing Systems</option>
+									<c:forEach items="${scripts}" var="script">
+										<c:set var="view" value="${script};;" />
+										<c:choose>
+											<c:when test="${script eq 'Latin'}">
+												<option name='${view}' value='${view}' selected='selected'>${script}</option>
+											</c:when>
+											<c:otherwise>
+												<option name='${view}' value='${view}'>${script}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<!--
 									<option name='Arabic' value='Arabic;;'>Arabic</option>
 									<option name='Armenian' value='Armenian;;'>Armenian</option>
 									<option name='Balinese' value='Balinese;;'>Balinese</option>
@@ -279,6 +291,7 @@
 									<option name='Tifinagh' value='Tifinagh;;'>Tifinagh</option>
 									<option name='Ugaritic' value='Ugaritic;;'>Ugaritic</option>
 									<option name='Yi' value='Yi;;'>Yi</option>
+									-->
 								</optgroup>
 							</select>
 						</td>
