@@ -37,7 +37,7 @@ public class DetailsService extends HttpServlet
 	public void init() throws ServletException
 	{
 		log.debug("init");
-		unicodeInfo = UnicodeInfo.getInstance();
+		unicodeInfo = UnicodeInfo.instance();
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

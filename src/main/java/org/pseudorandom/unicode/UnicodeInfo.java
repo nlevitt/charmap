@@ -3,30 +3,27 @@
 package org.pseudorandom.unicode;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
-import javax.servlet.ServletContext;
+
 import org.apache.log4j.Logger;
 
 public class UnicodeInfo
 {
 	private static Logger log = Logger.getLogger(UnicodeInfo.class);
 
+	@SuppressWarnings("unused")
 	private static final int UNICODE_MAX = 0x10ffff;
 	private static UnicodeInfo self = null;
 	private LinkedHashMap<Integer,CharInfo> data;
@@ -291,9 +288,9 @@ public class UnicodeInfo
 
 	/* constants for hangul (de)composition, see UAX #15 */
 	private static final int SBase  = 0xAC00;
-	private static final int LBase  = 0x1100;
-	private static final int VBase  = 0x1161;
-	private static final int TBase  = 0x11A7;
+	// private static final int LBase  = 0x1100;
+	// private static final int VBase  = 0x1161;
+	// private static final int TBase  = 0x11A7;
 	private static final int LCount = 19;
 	private static final int VCount = 21;
 	private static final int TCount = 28;
@@ -366,7 +363,7 @@ public class UnicodeInfo
 			log.debug(gc + ": " + debug_gcCounts.get(gc));
 	}
 
-	public static synchronized UnicodeInfo getInstance()
+	public static synchronized UnicodeInfo instance()
 	{
 		try
 		{
@@ -493,7 +490,7 @@ public class UnicodeInfo
 				double matchLevel = info.matches(query);
 				if (matchLevel > 0.000000001)
 				{
-					SearchResult result = new SearchResult(results.size(), info.getCh(), info.getScript(), info.getScriptIndex(), info);
+					SearchResult result = new SearchResult(results.size(), info.getCh(), info.getScript() + ";;", info.getScriptIndex(), info);
 					results.add(result);
 				}
 			}
@@ -551,7 +548,13 @@ public class UnicodeInfo
 	public static void main(String[] args) throws Exception
 	{
 		log.debug(new Date());
-		log.info("diaeresis results: " + getInstance().search("diaeresis"));
+		log.info("diaeresis results: " + instance().search("diaeresis"));
 		log.debug(new Date());
+	}
+
+	public String[] getScriptNames() {
+		String[] names = scripts.keySet().toArray(new String[0]);
+		Arrays.sort(names);
+		return names;
 	}
 }

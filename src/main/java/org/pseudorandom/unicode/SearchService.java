@@ -25,7 +25,7 @@ public class SearchService extends HttpServlet
 	public void init() throws ServletException
 	{
 		log.debug("SearchService.init()");
-		unic = UnicodeInfo.getInstance();
+		unic = UnicodeInfo.instance();
 		cache = new LinkedHashMap<String,List<SearchResult>>();
 	}
 
