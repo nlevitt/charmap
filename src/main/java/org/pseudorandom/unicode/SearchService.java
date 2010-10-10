@@ -94,9 +94,9 @@ public class SearchService extends HttpServlet
 
 		log.debug("writing json for " + (rObj.toString().length() >= 400 ? rObj.toString().substring(0,400) : rObj.toString()) + " ...");
 
-                response.setContentType("text/javascript"); // ;charset=utf-8");
-                response.setCharacterEncoding("UTF-8");
-		
+		response.setContentType("text/javascript"); // ;charset=utf-8");
+		response.setCharacterEncoding("UTF-8");
+
 		String json = JsonStringer.toJson(rObj);
 
 		response.getWriter().println(json);
