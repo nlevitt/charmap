@@ -517,7 +517,7 @@ public class UnicodeInfo
 
 		for (int i = i0; i < i0 + count; i++)
 		{
-			int ch = getView(view).getCharacter(i);
+			int ch = subset.getCharacter(i);
 			if (ch == -1)
 				break;
 

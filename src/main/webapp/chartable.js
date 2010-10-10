@@ -47,7 +47,7 @@ function Chartable(table)
 
 	var setActiveCh = function (ch)
 	{
-		activeCh = ch;
+		activeCh = Number(ch);
 		var cell = cells[activeCh];
 		log('chartable.setActiveCh() ch='+ch+' cell='+cell);
 		if (cell)
