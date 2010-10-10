@@ -100,7 +100,7 @@ function Charmap()
 		handleSearchResponse(responseText, false);
 	};
 
-	var handleSearchResponse = function (responseText,setSearchStatus)
+	var handleSearchResponse = function (responseText, setSearchStatus)
 	{
 		log('charmap.searchResponseHandler() responseText=' + responseText);
 		if (responseText)
@@ -114,10 +114,12 @@ function Charmap()
 						searchStatusElement.innerHTML = (response.result.index+1) + ' of ' + response.count;
 					details[response.result.ch] = response.result.detail;
 
+					/*
 					view = response.result.view;
 					onViewChange(view);
+					*/
 
-					jump(response.result.ch, response.result.detail);
+					jump(response.result.ch, true);
 				}
 				else if (setSearchStatus)
 					searchStatusElement.innerHTML = 'not found';
@@ -133,13 +135,13 @@ function Charmap()
 			searchStatusElement.innerHTML = 'responseText=' + responseText;
 	}
 
-	var jump = function (ch)
+	var jump = function (ch, updateViewFromScript)
 	{
 		log('charmap.jump() ch=' + ch + ' details=' + details + ' details[ch]=' + details[ch]);
 		if (details && details[ch])
 		{
 			log('charmap.jump() ch=' + ch + ' details[ch]=' + details[ch] + ', jumping');
-			doJump(ch,details[ch]);
+			doJump(ch, details[ch], updateViewFromScript);
 		}
 		else
 		{
@@ -168,12 +170,12 @@ function Charmap()
 		{
 			// log('charmap.moveActiveCh() [1] chartable.getActiveCh()=' + chartable.getActiveCh() + ' not doing anything');
 			log('charmap.moveActiveCh() [1] chartable.getActiveCh()=' + chartable.getActiveCh() + ' calling jump() chartable.getFirstCh()=' + chartable.getFirstCh());
-			jump(chartable.getFirstCh());
+			jump(chartable.getFirstCh(), false);
 		}
 		else if (chartable.getActiveChIndex() != -1 && chartable.getCharacter(chartable.getActiveChIndex() + n))
 		{
 			log('charmap.moveActiveCh() [2] calling jump() chartable.getCharacter(chartable.getActiveChIndex()+n)=' + chartable.getCharacter(chartable.getActiveChIndex()+n));
-			jump(chartable.getCharacter(chartable.getActiveChIndex() + n));
+			jump(chartable.getCharacter(chartable.getActiveChIndex() + n), false);
 		}
 		else if (chartable.isVisible(chartable.getActiveCh()) && getI0(scrollbar.getScrollTop()) + chartable.getActiveChIndex() + n >= 0 && getI0(scrollbar.getScrollTop()) + chartable.getActiveChIndex() + n < viewCharCount && !chartable.getCharacter(chartable.getActiveChIndex() + n))
 		{
@@ -198,9 +200,15 @@ function Charmap()
 			log('charmap.moveActiveCh() [4] NOT IMPLEMENTED chartable.getActiveCh()=' + chartable.getActiveCh() + ' chartable.getActiveChIndex()=' + chartable.getActiveChIndex() + ' chartable.getCharacter(chartable.getActiveChIndex()+n)=' + chartable.getCharacter(chartable.getActiveChIndex()+n));
 	};
 
-	var doJump = function (ch,detail)
+	var doJump = function (ch, detail, updateViewFromScript)
 	{
 		log('charmap.doJump() ch=' + ch + ' detail=' + detail);
+
+		if (updateViewFromScript && view != detail.script)
+		{
+			view = detail.script + ';;';
+			onViewChange(view);
+		}
 
 		if (!chartable.isVisible(ch))
 		{
@@ -420,7 +428,7 @@ function Charmap()
 
 	this.jump = function (ch)
 	{
-		jump(ch);
+		jump(ch, true);
 	};
 
 	this.handleLinkMouseover = function (event)

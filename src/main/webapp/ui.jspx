@@ -246,7 +246,7 @@
 							</tr>
 						</table>
 					</td>
-					<td><div id='scrollbar'><div id='scrollbar-insizer'></div></div></td>
+					<td><div id='scrollbar'><div id='scrollbar-insizer'> <!-- wtf man? --> </div></div></td>
 					<td>&amp;nbsp;</td>
 					<td> <!--  style='overflow:clip;' -->
 						<div id='balloon'>
