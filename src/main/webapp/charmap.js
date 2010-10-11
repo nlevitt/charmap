@@ -31,6 +31,7 @@ function Charmap()
 	var viewCharCount = 0;
 	var onViewChange = function () { log('charmap.onViewChange() not handled'); };
 	var newActiveChIndex = -1;
+	var scrollTimeoutId = false;
 
 	/* public variables */
 
@@ -67,9 +68,18 @@ function Charmap()
 		// scrollbar seems to handle going too far in either direction itself... w00t!
 		prevScrollTop = scrollbar.getScrollTop();
 		scrollbar.setScrollTop(scrollbar.getScrollTop() + deltaY * chartable.getNumCols());
+
 		if (scrollbar.getScrollTop() != prevScrollTop) {
-			// XXX consider doing something smart like with timeouts and cancelling to better handle lots of quick mouse wheeling?
-			retrieveDetails(view, scrollbar.getScrollTop(), chartable.getNumRows() * chartable.getNumCols(), noScrollbarUpdateDetailsHandler);
+			log('charmap.mouseWheelSpin() cancelling previous scrollTimeoutId=' + scrollTimeoutId);
+			if (scrollTimeoutId) {
+				window.clearTimeout(scrollTimeoutId);
+			}
+			scrollTimeoutId = window.setTimeout(
+				function() {
+					retrieveDetails(view, scrollbar.getScrollTop(), chartable.getNumRows() * chartable.getNumCols(), noScrollbarUpdateDetailsHandler);
+					scrollTimeoutId = false;
+				}, 
+				100, deltaY);
 		}
 	}
 
