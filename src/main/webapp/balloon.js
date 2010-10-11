@@ -93,7 +93,7 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 		for (var i = 0; items && i < items.length; i++)
 		{
 			var li = document.createElement('li');
-			linkify(li,items[i])
+			linkify(li, items[i])
 			ul.appendChild(li);
 		}
 
@@ -197,7 +197,8 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 			for (hanProp in detail.han) {
 				tr = table.insertRow(-1);
 				tr.insertCell(-1).innerHTML = hanProp.substring(1).replace(/[A-Z]/g, " $&");
-				tr.insertCell(-1).innerHTML = detail.han[hanProp];
+				td = tr.insertCell(-1);
+				linkify(td, detail.han[hanProp]);
 			}
 		}
 
