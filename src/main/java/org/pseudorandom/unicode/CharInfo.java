@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 // bean for json-ification
-public class CharInfo 
+public class CharInfo  
 {
 	private static Logger log = Logger.getLogger(CharInfo.class);
 
@@ -156,4 +156,9 @@ public class CharInfo
 
 		return 0;
 	}
+
+	public int getCC() {
+		return cc;
+	}
+	
 }

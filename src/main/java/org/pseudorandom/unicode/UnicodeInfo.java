@@ -55,32 +55,52 @@ public class UnicodeInfo
 		// zipinput = new ZipInputStream(getClass().getResourceAsStream("fc-lang.zip"));
 		// loadFcLang();
 
-		setAlgorithmicCharDetails();
+		initAlgorithmicCharDetails();
+		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
+		
+		initPrivateUseCharacters();
 		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
 
 		debug_logGcCounts();
 	}
 
+	/*
+	 * "Properties. The Unicode Character Database provides default character
+	 * properties, which implementations can use for the processing of
+	 * private-use characters." 
+	 * -- The Unicode Standard, Version 5.2, Section 16.5  
+	 */
+	private void initPrivateUseCharacters() {
+		for (int ch = 0xe001; ch < 0xf8ff; ch++) {
+			getData(ch).setName("<Private Use>");
+			getData(ch).setCC(getData(0xe000).getCC());
+			getData(ch).setGC(getData(0xe000).getGC());
+		}
+		for (int ch = 0xf0001; ch < 0xffffd; ch++) {
+			getData(ch).setName("<Private Use>");
+			getData(ch).setCC(getData(0xf0000).getCC());
+			getData(ch).setGC(getData(0xf0000).getGC());
+		}
+		for (int ch = 0x100001; ch < 0x10fffd; ch++) {
+			getData(ch).setName("<Private Use>");
+			getData(ch).setCC(getData(0x100000).getCC());
+			getData(ch).setGC(getData(0x100000).getGC());
+		}
+	}
+
 	private CharInfo getData(int ch)
 	{
-		/*
-		if (ch == 0x09e4)
-		{
-			try { throw new Exception("where the fuck are we?"); }
-			catch (Exception e) { log.debug("getData() ch=09E4", e); }
-		}
-		*/
-
 		CharInfo details = data.get(ch);
 		if (details == null)
 		{
 			details = new CharInfo(ch);
-			data.put(ch,details);
+			data.put(ch, details);
 		}
 
 		return details;
 	}
 
+	// XXX buggy - "FORM FEED" becomes "FORM U+FEED"
 	private String getNlValue(String nlLine)
 	{
 		// log.debug("\"" + nlLine.substring(3) +"\".replaceAll(\"\\b([0-9A-F]{4,6})\\b\", \"U+$1\") = " + nlLine.substring(3).replaceAll("\\b([0-9A-F]{4,6})\\b", "U+$1"));
@@ -300,7 +320,7 @@ public class UnicodeInfo
 	private static final String[] JAMO_V_TABLE = new String[] {"A","AE","YA","YAE","EO","E","YEO","YE","O","WA","WAE","OE","YO","U","WEO","WE","WI","YU","EU","YI","I"};
 	private static final String[] JAMO_T_TABLE = new String[] {"","G","GG","GS","N","NJ","NH","D","L","LG","LM","LB","LS","LT","LP","LH","M","B","BS","S","SS","NG","J","C","K","T","P","H"};
 
-	private void setAlgorithmicCharDetails()
+	private void initAlgorithmicCharDetails()
 	{
 		for (int ch = 0x3400; ch <= 0x4db5; ch++)
 		{
