@@ -446,10 +446,11 @@ public class UnicodeInfo
 
 					for (int ch = start; ch <= finish; ch++)
 					{
+						log.debug("ch=" + ch + " data.size()=" + data.size() + " split=" + Arrays.toString(split));
 						CharInfo charInfo = data.get(ch);
 						if (charInfo != null
-								&& (split[0].length() == 0 || split[0].equals(charInfo.getScript()))
-								&& (split[1].length() == 0 || charInfo.getGC().startsWith(split[1])))
+								&& ("".equals(split[0].length()) || split[0].equals(charInfo.getScript()))
+								&& (charInfo.getGC() != null && "".equals(split[1].length()) || charInfo.getGC().startsWith(split[1])))
 							subset.addCharacter(ch);
 					}
 				}
