@@ -9,10 +9,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
@@ -47,13 +49,13 @@ public class UnicodeInfo
 		loadScripts(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("Scripts.txt"), "ASCII")));
 		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
 
-		ZipInputStream zipinput = new ZipInputStream(getClass().getResourceAsStream("Unihan.zip"));
+		// 5.2 no longer has kDefinition and stuff, has indexes into dictionaries instead, but not online dictionaries!
+		ZipInputStream zipinput = new ZipInputStream(getClass().getResourceAsStream("Unihan-5.1.zip"));
 		zipinput.getNextEntry();
 		loadUnihan(new BufferedReader(new InputStreamReader(zipinput, "UTF-8")));
 		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
-
-		// 5.2 no longer has kDefinition and stuff, has indexes into dictionaries instead, but not online dictionaries!
-		zipinput = new ZipInputStream(getClass().getResourceAsStream("Unihan-5.1.zip"));
+		
+		zipinput = new ZipInputStream(getClass().getResourceAsStream("Unihan.zip"));
 		zipinput.getNextEntry();
 		loadUnihan(new BufferedReader(new InputStreamReader(zipinput, "UTF-8")));
 		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
@@ -159,6 +161,7 @@ public class UnicodeInfo
 		return line;
 	}
 
+	protected static final Set<String> HAN_WE_WANT = new HashSet<String>(Arrays.asList(new String[] { "kDefinition","kMandarin","kCantonese","kKorean","kHangul", "kJapaneseKun","kJapaneseOn","kFrequency","kSimplifiedVariant", "kTraditionalVariant" }));
 	private void loadUnihan(BufferedReader reader) throws IOException
 	{
 		log.debug("loadUnihan() reader=" + reader);
@@ -175,26 +178,9 @@ public class UnicodeInfo
 			{
 				int ch = Integer.parseInt(matcher.group(1), 16);
 
-				if ("kDefinition".equals(matcher.group(2)))
-					getData(ch).addHan("kDef", matcher.group(3));
-				else if ("kMandarin".equals(matcher.group(2)))
-					getData(ch).addHan("kMan", matcher.group(3));
-				else if ("kCantonese".equals(matcher.group(2)))
-					getData(ch).addHan("kCan", matcher.group(3));
-				else if ("kKorean".equals(matcher.group(2)))
-					getData(ch).addHan("kKor", matcher.group(3));
-				else if ("kHangul".equals(matcher.group(2)))
-					getData(ch).addHan("kHan", matcher.group(3));
-				else if ("kJapaneseKun".equals(matcher.group(2)))
-					getData(ch).addHan("kKun", matcher.group(3));
-				else if ("kJapaneseOn".equals(matcher.group(2)))
-					getData(ch).addHan("kOn", matcher.group(3));
-				else if ("kFrequency".equals(matcher.group(2)))
-					getData(ch).addHan("kFre", matcher.group(3));
-				else if ("kSimplifiedVariant".equals(matcher.group(2)))
-					getData(ch).addHan("kSim", matcher.group(3));
-				else if ("kTraditionalVariant".equals(matcher.group(2)))
-					getData(ch).addHan("kTra", matcher.group(3));
+				if (HAN_WE_WANT.contains(matcher.group(2).intern())) {
+					getData(ch).setHanProperty(matcher.group(2).intern(), matcher.group(3));
+				}
 
 				if (ch != lastCh && ch % 0x400 == 0)
 					log.debug("At Unihan line [" + line + "] Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");

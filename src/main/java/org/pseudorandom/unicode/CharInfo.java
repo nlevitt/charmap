@@ -29,7 +29,7 @@ public class CharInfo
 
 	private Integer[] colon = null;
 
-	public void addHan(String prop, String value)
+	public void setHanProperty(String prop, String value)
 	{
 		if (han == null)
 			han = new LinkedHashMap<String,String>();

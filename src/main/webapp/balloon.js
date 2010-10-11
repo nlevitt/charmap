@@ -141,10 +141,10 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 		if (detail.name)
 			element.appendChild(document.createTextNode(' ' + detail.name));
 
-		if (detail.han && detail.han['kDef'])
+		if (detail.han && detail.han['kDefinition'])
 		{
 			balloonContentElement.appendChild(document.createTextNode('Definition'));
-			var definitions = detail.han['kDef'].split(/[;,]/);
+			var definitions = detail.han['kDefinition'].split(/[;,]/);
 			var ol = document.createElement('ol');
 			for (var i = 0; i < definitions.length; i++)
 			{
@@ -187,13 +187,19 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 			tr.insertCell(-1).innerHTML = detail.script;
 		}
 
-		if (detail.han)
-			for (var hanProp in detail.han)
-			{
+		if (detail.han) {
+		/*
+			for (var hanProp in ['kDefinition','kMandarin','kCantonese','kKorean','kHangul',
+				             'kJapaneseKun','kJapaneseOn','kFrequency','kSimplifiedVariant',
+					     'kTraditionalVariant']) {
+				if (detail.han[hanProp]) {
+					     */
+			for (hanProp in detail.han) {
 				tr = table.insertRow(-1);
-				tr.insertCell(-1).innerHTML = 'detail.han[' + hanProp + ']';
+				tr.insertCell(-1).innerHTML = hanProp.substring(1).replace(/[A-Z]/g, " $&");
 				tr.insertCell(-1).innerHTML = detail.han[hanProp];
 			}
+		}
 
 		if (detail.strz)
 		{
