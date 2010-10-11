@@ -208,7 +208,7 @@
 									<!-- <option name='Other Symbols' value='*;So'>Other Symbols</option> -->
 									<option name='Spacing Characters' value=';Z;'>Spacing Characters</option> 
 									<option name='Diacritical Marks' value='Inherited;Mn;'>Diacritical Marks</option> 
-									<option name='Enclosing Marks' value='*;Me;'>Enclosing Marks</option> 
+									<option name='Enclosing Marks' value=';Me;'>Enclosing Marks</option> 
 									<option name='Musical Symbols' value=';;1D100..1D1FF'>Musical Symbols</option>
 									<option name='Archaic Musical Symbols' value=';;1D000..1D0FF,1D200..1D24F'>Archaic Musical Symbols</option>
 									<option name='Private Use' value=';;E000..F8FF,F0000..FFFFF,100000..10FFFF'>Private Use</option>

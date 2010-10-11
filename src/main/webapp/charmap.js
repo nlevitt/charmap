@@ -436,7 +436,7 @@ function Charmap()
 	// XXX should this go in main.js?
 	this.handleKeypress = function (event) 
 	{ 
-		log('charmap.handleKeypress() getTarget(event).nodeName=' + getTarget(event).nodeName + ' getTarget(event).id=' + getTarget(event).id + ' event.charCode=' + event.charCode + '="' + String.fromCharCode(event.charCode) + '" event.keyCode=' + event.keyCode + ' event.altKey=' + event.altKey + ' event.shiftKey ' + event.shiftKey + ' event.ctrlKey=' + event.ctrlKey + ' event.metaKey=' + event.metaKey); 
+		log('charmap.handleKeypress() getTarget(event).nodeName=' + getTarget(event).nodeName + ' getTarget(event).id=' + getTarget(event).id + ' event.charCode=' + event.charCode + '="' + String.fromCharCode(event.charCode) + '" event.keyCode=' + event.keyCode + ' event.altKey=' + event.altKey + ' event.shiftKey=' + event.shiftKey + ' event.ctrlKey=' + event.ctrlKey + ' event.metaKey=' + event.metaKey); 
 
 		if (getTarget(event).nodeName.toLowerCase() != 'html' && getTarget(event).nodeName.toLowerCase() != 'body')
 		{

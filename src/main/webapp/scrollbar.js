@@ -33,7 +33,7 @@ function VScrollbar(scrollbarElement,scrollbarInsizerElement,chartableElement)
 
 	// public 
 
-	this.redraw = function redraw(viewCharCount,pageHeightPx,numRows,numCols)
+	this.redraw = function redraw(viewCharCount, pageHeightPx, numRows, numCols)
 	{
 		scrollbarElement.style.height = pageHeightPx + 'px';
 		scrollbarInsizerElement.style.height = Math.round(pageHeightPx + (viewCharCount - numRows*numCols)) + 'px';

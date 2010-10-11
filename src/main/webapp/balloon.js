@@ -44,7 +44,7 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 		var link = makeCharLink(ch);
 		link.appendChild(document.createTextNode(ustring(ch) + ' ‘'));
 		var b = document.createElement('b');
-		b.appendChild(document.createTextNode(String.fromCharCode(ch)));
+		b.innerHTML = '&#' + ch + ';';
 		link.appendChild(b);
 		link.appendChild(document.createTextNode('’'));
 		return link;
