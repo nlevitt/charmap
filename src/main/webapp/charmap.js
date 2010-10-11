@@ -64,7 +64,13 @@ function Charmap()
 		log('charmap.mouseWheelSpin() deltaY=' + deltaY + ' e=' + e + ' e.wheelDelta=' + e.wheelDelta + ' e.detail=' + e.detail 
 				+ ' e.axis=' + e.axis + ' e.wheelDeltaX=' + e.wheelDeltaX + ' e.wheelDeltaY=' + e.wheelDeltaY);
 
-		moveActiveCh(deltaY * chartable.getNumCols());
+		// scrollbar seems to handle going too far in either direction itself... w00t!
+		prevScrollTop = scrollbar.getScrollTop();
+		scrollbar.setScrollTop(scrollbar.getScrollTop() + deltaY * chartable.getNumCols());
+		if (scrollbar.getScrollTop() != prevScrollTop) {
+			// XXX consider doing something smart like with timeouts and cancelling to better handle lots of quick mouse wheeling?
+			retrieveDetails(view, scrollbar.getScrollTop(), chartable.getNumRows() * chartable.getNumCols(), noScrollbarUpdateDetailsHandler);
+		}
 	}
 
 	var setStatusCh = function (ch)
@@ -243,7 +249,7 @@ function Charmap()
 		showBalloon(ch);
 	};
 
-	var handleDetailsResponse = function handleDetailsResponse(responseText,redrawScrollbar)
+	var handleDetailsResponse = function handleDetailsResponse(responseText, redrawScrollbar)
 	{
 		log('charmap.handleDetailsResponse() responseText.length=' + responseText.length);
 
