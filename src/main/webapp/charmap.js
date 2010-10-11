@@ -476,9 +476,12 @@ function Charmap()
 	// XXX should this go in main.js?
 	this.handleKeypress = function (event) 
 	{ 
-		log('charmap.handleKeypress() getTarget(event).nodeName=' + getTarget(event).nodeName + ' getTarget(event).id=' + getTarget(event).id + ' event.charCode=' + event.charCode + '="' + String.fromCharCode(event.charCode) + '" event.keyCode=' + event.keyCode + ' event.altKey=' + event.altKey + ' event.shiftKey=' + event.shiftKey + ' event.ctrlKey=' + event.ctrlKey + ' event.metaKey=' + event.metaKey); 
+		event = event || window.event;
 
-		if (getTarget(event).nodeName.toLowerCase() != 'html' && getTarget(event).nodeName.toLowerCase() != 'body')
+		log('charmap.handleKeypress() getTarget(event).nodeName=' + getTarget(event).nodeName + ' getTarget(event).id=' + getTarget(event).id + ' event.charCode=' + event.charCode + ' event.keyCode=' + event.keyCode + ' event.altKey=' + event.altKey + ' event.shiftKey=' + event.shiftKey + ' event.ctrlKey=' + event.ctrlKey + ' event.metaKey=' + event.metaKey); 
+
+		targetNodeName = getTarget(event).nodeName.toLowerCase();
+		if (targetNodeName != 'html' && targetNodeName != 'body' && targetNodeName != 'td')
 		{
 			// esc
 			if (event.keyCode == 27) 
@@ -490,46 +493,48 @@ function Charmap()
 				return;
 		}
 
+		keyCharCode = event.charCode || event.keyCode;
+
 		// right arrow, 'l'
-		if ((event.keyCode == 39 || event.keyCode == 63235 || event.charCode == 'l'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
+		if ((keyCharCode == 39 || keyCharCode == 63235 || keyCharCode == 'l'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
 			moveActiveCh(1);
 
 		// left arrow, 'h'
-		else if ((event.keyCode == 37 || event.keyCode == 63234 || event.charCode == 'h'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
+		else if ((keyCharCode == 37 || keyCharCode == 63234 || keyCharCode == 'h'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
 			moveActiveCh(-1);
 
 		// down arrow, 'j'
-		else if ((event.keyCode == 40 || event.keyCode == 63233 || event.charCode == 'j'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
+		else if ((keyCharCode == 40 || keyCharCode == 63233 || keyCharCode == 'j'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
 			moveActiveCh(chartable.getNumCols());
 
 		// up arrow, 'k'
-		else if ((event.keyCode == 38 || event.keyCode == 63232 || event.charCode == 'k'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
+		else if ((keyCharCode == 38 || keyCharCode == 63232 || keyCharCode == 'k'.charCodeAt()) && !event.shiftKey && !event.ctrlKey + !event.altKey + !event.metaKey)
 			moveActiveCh(-chartable.getNumCols());
 
 		// 'b', 'B', any modifiers
-		else if (event.charCode == 'b'.charCodeAt() || event.charCode == 'B'.charCodeAt())
+		else if (keyCharCode == 'b'.charCodeAt() || keyCharCode == 'B'.charCodeAt())
 			toggleBold();
 
 		// 'i', 'I', any modifiers
-		else if (event.charCode == 'i'.charCodeAt() || event.charCode == 'I'.charCodeAt())
+		else if (keyCharCode == 'i'.charCodeAt() || keyCharCode == 'I'.charCodeAt())
 			toggleItalic();
 
-		else if (event.charCode == '+'.charCodeAt() || event.charCode == '='.charCodeAt())
+		else if (keyCharCode == '+'.charCodeAt() || keyCharCode == '='.charCodeAt())
 			bigger();
 
-		else if (event.charCode == '-'.charCodeAt())
+		else if (keyCharCode == '-'.charCodeAt())
 			smaller();
 
-		else if (event.charCode == 'n'.charCodeAt() || event.charCode == 'N'.charCodeAt() || event.charCode == 'g'.charCodeAt())
+		else if (keyCharCode == 'n'.charCodeAt() || keyCharCode == 'N'.charCodeAt() || keyCharCode == 'g'.charCodeAt())
 			findNext(searchForm.query.value);
 
-		else if (event.charCode == 's'.charCodeAt() || event.charCode == 'S'.charCodeAt())
+		else if (keyCharCode == 's'.charCodeAt() || keyCharCode == 'S'.charCodeAt())
 		{
 			log('charmap.handleKeypress() calling searchInput.focus() searchInput=' + searchInput);
 			searchInput.focus();
 		}
 
-		else if (event.charCode == 'v'.charCodeAt() || event.charCode == 'V'.charCodeAt())
+		else if (keyCharCode == 'v'.charCodeAt() || keyCharCode == 'V'.charCodeAt())
 		{
 			log('charmap.handleKeypress() calling viewElement.focus() viewElement=' + viewElement);
 			viewElement.focus();

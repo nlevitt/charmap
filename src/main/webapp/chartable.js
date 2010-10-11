@@ -71,8 +71,7 @@ function Chartable(table)
 		}
 	};
 
-	var handleCellClick = function (event)
-	{
+	var handleCellClick = function(event) {
 		var cell = getTarget(event);
 		log('chartable.handleCellClick() event=' + event + ' cell.id=' + ustring(cell.id) + ' onActiveCellChange=' + onActiveCellChange);
 
@@ -80,8 +79,9 @@ function Chartable(table)
 		{
 			unsetActiveCh();
 			setActiveCh(cell.id);
-			if (onActiveCellChange)
-				onActiveCellChange(cell.id,true);
+			if (onActiveCellChange) {
+				onActiveCellChange(cell.id, true);
+			}
 		}
 	};
 
@@ -91,9 +91,9 @@ function Chartable(table)
 		cell.className = 'empty';
 		cell.innerHTML = '';
 		cell.style.cssText = '';
-		cell.onmouseover = false;
-		cell.onmouseout = false;
-		cell.onclick = false;
+		cell.onmouseover = null;
+		cell.onmouseout = null;
+		cell.onclick = null;
 	};
 
 	var initCharCell = function (cell,ch) 
@@ -127,26 +127,34 @@ function Chartable(table)
 		cells[ch] = cell;
 	};
 
+	var getCssRules = function() {
+		var cssRules = false;
+		if (document.styleSheets && document.styleSheets[0] && document.styleSheets[0].cssRules) {
+			return document.styleSheets[0].cssRules;
+		} else if (document.styleSheets && document.styleSheets[0] && document.styleSheets[0].rules) {
+			return document.styleSheets[0].rules;
+		} else {
+			log('chartable.getCssRules() WARNING no css rules, what browser is this anyway');
+			return false
+		}
+	}
+
 	// first rule is the #chartable td{} rule
 	var setCharcellCssRule = function (fontSizePx,widthPx,heightPx)
 	{
 		log('chartable.setCharcellCssRule() fontSizePx=' + fontSizePx + ' heightPx=' + heightPx + ' widthPx=' + widthPx);
-		// log('chartable.setCharcellCssRule() document.URL=' + document.URL);
-		// log('chartable.setCharcellCssRule() document.styleSheets=' + document.styleSheets); //  + ' document.styleSheets.length=' + document.styleSheets.length);
 
-		var cssRules = false;
-		if (document.styleSheets && document.styleSheets[0] && document.styleSheets[0].cssRules)
-			cssRules = document.styleSheets[0].cssRules;
-		else if (document.styleSheets && document.styleSheets[0] && document.styleSheets[0].rules)
-			cssRules = document.styleSheets[0].rules;
-		else
-			log('chartable.setCharcellCssRule() WARNING no css rules, what browser is this anyway');
-
-		if (cssRules)
-		{
-			cssRules[0].style.fontSize = fontSizePx + 'px';
-			cssRules[0].style.width = widthPx + 'px';
-			cssRules[0].style.height = heightPx + 'px';
+		if (getCssRules()) {
+			// sanity check to avoid error in ie
+			if (fontSizePx > 0 && fontSizePx <= 10000) {
+				getCssRules()[0].style.fontSize = fontSizePx + 'px';
+			}
+			if (widthPx >= 0 && widthPx <= 10000) {
+				getCssRules()[0].style.width = widthPx + 'px';
+			}
+			if (heightPx >= 0 && heightPx <= 10000) {
+				getCssRules()[0].style.height = heightPx + 'px';
+			}
 		}
 
 		// log('chartable.setCharcellCssRule() set rule cssRules[0].cssText=' + cssRules[0].cssText);
@@ -175,7 +183,7 @@ function Chartable(table)
 		cssWidthPx = Math.floor(maxWidth / numCols) - (table.offsetWidth - fontSizePx*2);
 
 		setCharcellCssRule(fontSizePx,cssWidthPx,cssHeightPx);
-		log('chartable.doResize() finished #chartable td{width:' + document.styleSheets[0].cssRules[0].style.width + ';height:' + document.styleSheets[0].cssRules[0].style.height + '} numRows=' + numRows + ' numCols=' + numCols);
+		log('chartable.doResize() finished #chartable td{width:' + getCssRules()[0].style.width + ';height:' + getCssRules()[0].style.height + '} numRows=' + numRows + ' numCols=' + numCols);
 	};
 
 	// use when there's been no resizing
