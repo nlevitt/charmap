@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
+
 import org.apache.log4j.Logger;
 
 class UnicodeSubset
@@ -12,12 +14,17 @@ class UnicodeSubset
 
 	private class Range 
 	{
-		final int ch0, ch1;
+		int ch0;
+		int ch1;
 
 		Range(int ch0, int ch1)
 		{
 			this.ch0 = ch0;
 			this.ch1 = ch1;
+		}
+		
+		public String toString() {
+			return UnicodeInfo.getHexString(ch0) + ".." + UnicodeInfo.getHexString(ch1); 
 		}
 	}
 
@@ -49,15 +56,36 @@ class UnicodeSubset
 	}
 
 	// XXX smart insertion
-	void addRange(int ch0, int ch1)
+	void addRange(int ch0, int ch1) {
+		dumbAddRange(ch0, ch1);
+		consolidateRanges();
+	}
+	
+	// ranges must be sorted
+	private void consolidateRanges() {
+		Range thisRange = null;
+		Range lastRange = null;
+		
+		ListIterator<Range> listIter = ranges.listIterator();
+		while (listIter.hasNext()) {
+			lastRange = thisRange;
+			thisRange = listIter.next();
+			
+			if (lastRange != null && lastRange.ch1 + 1 >= thisRange.ch0) {
+				lastRange.ch1 = Math.max(lastRange.ch1, thisRange.ch1);
+				listIter.remove();
+			}
+		}
+	}
+
+	private void dumbAddRange(int ch0, int ch1)
 	{
 		count += ch1 - ch0 + 1;
 
 		int i = 0;
 		for (Range range: ranges)
 		{
-			if (ch1 >= range.ch0 && ch0 < range.ch0)
-			{
+			if (ch1 >= range.ch0 && ch0 < range.ch0) {
 				ranges.add(i, new Range(ch0, ch1));
 				// log.debug("UnicodeSubset.addRange() ch0=" + ch0 + " ch1=" + ch1 + " -> " + toString());
 				return;
