@@ -31,10 +31,19 @@ public class CharInfo
 
 	public void setHanProperty(String prop, String value)
 	{
-		if (han == null)
+		if (han == null) {
 			han = new LinkedHashMap<String,String>();
+		}
 
 		han.put(prop, value);
+	}
+	
+	public String getHanProperty(String prop) {
+		if (han != null) {
+			return han.get(prop);
+		} else {
+			return null;
+		}
 	}
 
 	public void setScript(String script)
@@ -153,6 +162,12 @@ public class CharInfo
 			for (String str: strz)
 				if (queryRegex.matcher(str).find())
 					return 0.400;
+		
+		if (getHanProperty("kDefinition") != null) {
+			if (queryRegex.matcher(getHanProperty("kDefinition")).find()) {
+				return 0.300;
+			}
+		}
 
 		return 0;
 	}
