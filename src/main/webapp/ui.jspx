@@ -108,7 +108,7 @@
 									<option>Cursive</option>
 									<option>Fantasy</option>
 									<option>Monospace</option>
-									<option selected='selected'>Sans Serif</option>
+									<option selected='selected' value='sans-serif'>Sans Serif</option>
 									<option>Serif</option>
 								</optgroup>
 								<optgroup label='Other Fonts'>
