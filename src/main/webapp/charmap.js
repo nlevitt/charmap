@@ -43,6 +43,30 @@ function Charmap()
 			showBalloon(ch);
 	};
 
+	// firefox: e=[object MouseScrollEvent] e.wheelDelta=undefined e.detail=-3 e.axis=2 e.wheelDeltaX=undefined e.wheelDeltaY=undefined
+	// chrome:  e=[object WheelEvent] e.wheelDelta=-6360 e.detail=0 e.axis=undefined e.wheelDeltaX=0 e.wheelDeltaY=-6360
+	var mouseWheelSpin = function (evt) {
+		e = evt || window.event;
+
+		deltaY = 0;
+		if (e.axis) {
+			if (e.axis == 2) {
+				deltaY = e.detail;
+			} // else other axis, ignore
+		} else if (e.wheelDeltaY) {
+			deltaY = -e.wheelDeltaY / 120;
+		} else if (e.wheelDelta) {
+			deltaY = -e.wheelDelta / 120;
+		} else if (e.detail) {
+			deltaY = e.detail;
+		}
+
+		log('charmap.mouseWheelSpin() deltaY=' + deltaY + ' e=' + e + ' e.wheelDelta=' + e.wheelDelta + ' e.detail=' + e.detail 
+				+ ' e.axis=' + e.axis + ' e.wheelDeltaX=' + e.wheelDeltaX + ' e.wheelDeltaY=' + e.wheelDeltaY);
+
+		moveActiveCh(deltaY * chartable.getNumCols());
+	}
+
 	var setStatusCh = function (ch)
 	{
 		// log('cellMouseover ch=' + ch);
@@ -509,6 +533,12 @@ function Charmap()
 	chartable.setActiveCellChange(activeCellChange); // onActiveCellChange = activeCellChange;
 	chartable.setCellMouseover(setStatusCh); // onCellMouseover = setStatusCh;
 	log('charmap.Charmap() chartable.onActiveCellChange=' + chartable.onActiveCellChange);
+	if (chartableElement.addEventListener) {
+		chartableElement.addEventListener('DOMMouseScroll', mouseWheelSpin, false);
+		chartableElement.addEventListener('mousewheel', mouseWheelSpin, false);
+	} else {
+		chartableElement.onmousewheel = mouseWheelSpin;
+	}
 
 	var msg = "getting data, please wait...";
 	var chs = new Array();
