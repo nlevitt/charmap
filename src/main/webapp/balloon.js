@@ -182,10 +182,10 @@ function Balloon(balloonElement,balloonBigcharElement,balloonContentElement,char
 		tr.insertCell(-1).innerHTML = getCcDesc(detail.cc) + ' (value=' + detail.cc + ')';
 
 		tr = table.insertRow(-1);
-		if (!detail.cc)
-			detail.cc = 0;
-		tr.insertCell(-1).innerHTML = 'Script';
-		tr.insertCell(-1).innerHTML = detail.script;
+		if (detail.script) {
+			tr.insertCell(-1).innerHTML = 'Script';
+			tr.insertCell(-1).innerHTML = detail.script;
+		}
 
 		if (detail.han)
 			for (var hanProp in detail.han)
