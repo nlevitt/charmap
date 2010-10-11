@@ -88,9 +88,10 @@ function log(message)
 	var now = new Date();
 	var timestamp = (1 + now.getHours() / 100).toFixed(2).substr(2) + ':' + (1 + now.getMinutes() / 100).toFixed(2).substr(2) + ':' + (1 + now.getSeconds() / 100).toFixed(2).substr(2) + '.' + (1 + now.getMilliseconds() / 1000).toFixed(3).substr(2);
 
-	if (window.console)
-		window.console.log(timestamp + ' - ' + message);
-	else if (document.getElementById('log'))
+	// if (window.console)
+	// 	window.console.log(timestamp + ' - ' + message);
+	// else 
+	if (document.getElementById('log'))
 	{
 		var line = document.createElement('div');
 		line.innerHTML = timestamp + ' -    ';
