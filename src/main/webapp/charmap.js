@@ -55,9 +55,9 @@ function Charmap()
 				deltaY = e.detail;
 			} // else other axis, ignore
 		} else if (e.wheelDeltaY) {
-			deltaY = -e.wheelDeltaY / 120;
+			deltaY = -e.wheelDeltaY / 600;
 		} else if (e.wheelDelta) {
-			deltaY = -e.wheelDelta / 120;
+			deltaY = -e.wheelDelta / 600;
 		} else if (e.detail) {
 			deltaY = e.detail;
 		}
