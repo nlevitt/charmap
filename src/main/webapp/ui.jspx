@@ -49,7 +49,7 @@
 			/* #balloon-content *         { border:1px solid #f00; } */
 			#balloon-content ul,
 			#balloon-content ol        { margin-top:0; margin-bottom:0; }
-			#balloon-bigchar           { font-size:600%; float:right; padding:12px; }
+			#balloon-bigchar           { font-size:600%; float:right; padding:12px; min-width:1em; }
 			#balloon table             { margin-top:1em; margin-bottom:1em; }
 			#balloon td                { border:1px dotted #aaa; padding:6px; vertical-align:top; }
 			#scrollbar                 { overflow:scroll; width:1em; height:100px; }
@@ -192,7 +192,8 @@
 									<option name='Inherited'>Inherited</option>
 								</optgroup>
 								-->
-								<!-- XXX i think i came up with these myself? they do make some sense -->
+								<!-- XXX i think i came up with these myself? 
+								     can't remember if i intended them to be auto-generated at some point? -->
 								<optgroup label='Special Characters'>
 									<option name='Punctuation' value=';P;'>Punctuation</option>
 									<option name='Modifier Symbols' value=';Sk;'>Modifier Symbols</option> 
