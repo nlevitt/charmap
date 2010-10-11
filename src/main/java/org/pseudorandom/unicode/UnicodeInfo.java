@@ -52,6 +52,12 @@ public class UnicodeInfo
 		loadUnihan(new BufferedReader(new InputStreamReader(zipinput, "UTF-8")));
 		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
 
+		// 5.2 no longer has kDefinition and stuff, has indexes into dictionaries instead, but not online dictionaries!
+		zipinput = new ZipInputStream(getClass().getResourceAsStream("Unihan-5.1.zip"));
+		zipinput.getNextEntry();
+		loadUnihan(new BufferedReader(new InputStreamReader(zipinput, "UTF-8")));
+		log.debug("Memory: " + Runtime.getRuntime().freeMemory()/1048576  + "M free; " + Runtime.getRuntime().maxMemory()/1048576 + "M max; " + Runtime.getRuntime().totalMemory()/1048576 + "M total");
+
 		// zipinput = new ZipInputStream(getClass().getResourceAsStream("fc-lang.zip"));
 		// loadFcLang();
 
