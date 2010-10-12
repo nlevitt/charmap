@@ -40,8 +40,9 @@ function Charmap()
 	var activeCellChange = function (ch,active)
 	{
 		log('charmap.activeCellChange() ch=' + ch + 'active=' + active);
-		if (active)
+		if (active) {
 			showBalloon(ch);
+		}
 	};
 
 	// firefox: e=[object MouseScrollEvent] e.wheelDelta=undefined e.detail=-3 e.axis=2 e.wheelDeltaX=undefined e.wheelDeltaY=undefined
@@ -70,13 +71,13 @@ function Charmap()
 		scrollbar.setScrollTop(scrollbar.getScrollTop() + deltaY * chartable.getNumCols());
 
 		if (scrollbar.getScrollTop() != prevScrollTop) {
-			log('charmap.mouseWheelSpin() cancelling previous scrollTimeoutId=' + scrollTimeoutId);
 			if (scrollTimeoutId) {
+				log('charmap.mouseWheelSpin() cancelling previous scrollTimeoutId=' + scrollTimeoutId);
 				window.clearTimeout(scrollTimeoutId);
 			}
 			scrollTimeoutId = window.setTimeout(
 				function() {
-					retrieveDetails(view, scrollbar.getScrollTop(), chartable.getNumRows() * chartable.getNumCols(), noScrollbarUpdateDetailsHandler);
+					retrieveDetails(view, getI0(scrollbar.getScrollTop()), chartable.getNumRows() * chartable.getNumCols(), noScrollbarUpdateDetailsHandler);
 					scrollTimeoutId = false;
 				}, 
 				100, deltaY);
