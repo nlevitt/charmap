@@ -66,7 +66,7 @@ public class SearchService extends HttpServlet
 		else if (request.getParameter("q") != null)
 		{
 			String query = request.getParameter("q").trim();
-				results = cache.get(query);
+			results = cache.get(query);
 
 			if (results == null)
 			{

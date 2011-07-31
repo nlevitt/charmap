@@ -1,4 +1,4 @@
-MAVEN_OPTS='-Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n' mvn jetty:run
+MAVEN_OPTS='-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n' mvn jetty:run
 
 fonts:
 

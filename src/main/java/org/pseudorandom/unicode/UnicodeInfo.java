@@ -501,6 +501,12 @@ public class UnicodeInfo
 			SearchResult result = new SearchResult(results.size(), query.codePointAt(0), info.getScript(), info.getScriptIndex(), info);
 			results.add(result);
 		}
+		else if (query.matches("(?i)u[+][0-9a-f]{4,6}") && data.get(Integer.parseInt(query.substring(2), 16)) != null)
+		{
+			CharInfo info = data.get(Integer.parseInt(query.substring(2), 16));
+			SearchResult result = new SearchResult(results.size(), query.codePointAt(0), info.getScript(), info.getScriptIndex(), info);
+			results.add(result);
+		}
 		else
 		{
 			for (CharInfo info: data.values())
