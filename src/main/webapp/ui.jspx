@@ -216,16 +216,21 @@
 								</optgroup>
 								<optgroup label='Written Scripts'>
 									<option name='Archaic Writing Systems' value=';;10000..103DF,10800..1247F,1D300..1D35F'>Archaic Writing Systems</option>
-									<c:forEach items="${scripts}" var="script">
+									<c:forEach items="${unicodeInfo.scriptNames}" var="script">
 										<c:set var="view" value="${script};;" />
 										<c:choose>
 											<c:when test="${script eq 'Latin'}">
-												<option name='${view}' value='${view}' selected='selected'>${script}</option>
+												<option name='${script}' value='${view}' selected='selected'>${script}</option>
 											</c:when>
 											<c:otherwise>
-												<option name='${view}' value='${view}'>${script}</option>
+												<option name='${script}' value='${view}'>${script}</option>
 											</c:otherwise>
 										</c:choose>
+									</c:forEach>
+								</optgroup>
+								<optgroup label='Unicode Blocks'>
+									<c:forEach items='${unicodeInfo.blocks}' var='block'>
+										<option name='${block.name}' value=';;${block.rangeString}'>${block.name}</option>
 									</c:forEach>
 								</optgroup>
 							</select>
@@ -257,6 +262,7 @@
 							<div id='balloon-content'> 
 								<h2> Welcome to charmap.org. </h2>
 								<p> Browse characters in the table, or search for a character above. </p>
+								<p style="font-variant:small-caps;font-weight:bold"> Unicode ${unicodeInfo.unicodeVersion} </p>
 							</div>
 						</div>
 					</td>
@@ -268,7 +274,7 @@
 			<!-- wtf man -->
 		</div>
 		<div id='bottom-right'>
-			<span> (c) 2007,2010 <a href='http://pseudorandom.org/'>pseudorandom &amp;amp; sons</a> </span>
+			<span> (c) 2007-2011 <a href='http://pseudorandom.org/'>Pseudorandom &amp;amp; Sons</a> </span>
 		</div>
 		<div id='bottom-content'>
 			<!--

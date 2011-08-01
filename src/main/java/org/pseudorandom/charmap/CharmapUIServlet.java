@@ -16,7 +16,7 @@ public class CharmapUIServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.setAttribute("scripts", UnicodeInfo.instance().getScriptNames());
+		req.setAttribute("unicodeInfo", UnicodeInfo.instance());
 		req.getRequestDispatcher("/ui.jspx").forward(req, resp);
 	}
 

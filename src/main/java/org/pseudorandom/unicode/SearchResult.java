@@ -1,6 +1,5 @@
 package org.pseudorandom.unicode;
 
-import org.apache.log4j.Logger;
 
 class SearchResult
 {

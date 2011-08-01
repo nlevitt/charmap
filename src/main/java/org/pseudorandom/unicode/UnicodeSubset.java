@@ -8,23 +8,21 @@ import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
 
-class UnicodeSubset
+public class UnicodeSubset
 {
 	private static Logger log = Logger.getLogger(UnicodeSubset.class);
 
-	private class Range 
-	{
+	private class Range {
 		int ch0;
 		int ch1;
 
-		Range(int ch0, int ch1)
-		{
+		Range(int ch0, int ch1) {
 			this.ch0 = ch0;
 			this.ch1 = ch1;
 		}
-		
+
 		public String toString() {
-			return UnicodeInfo.getHexString(ch0) + ".." + UnicodeInfo.getHexString(ch1); 
+			return UnicodeInfo.getHexString(ch0) + ".." + UnicodeInfo.getHexString(ch1);
 		}
 	}
 
@@ -39,12 +37,12 @@ class UnicodeSubset
 		this.count = 0;
 	}
 
-	String getName()
+	public String getName()
 	{
 		return name;
 	}
 
-	int getCount()
+	public int getCount()
 	{
 		return count;
 	}
@@ -62,7 +60,7 @@ class UnicodeSubset
 	}
 	
 	// ranges must be sorted
-	private void consolidateRanges() {
+	protected void consolidateRanges() {
 		Range thisRange = null;
 		Range lastRange = null;
 		
@@ -78,7 +76,7 @@ class UnicodeSubset
 		}
 	}
 
-	private void dumbAddRange(int ch0, int ch1)
+	protected void dumbAddRange(int ch0, int ch1)
 	{
 		count += ch1 - ch0 + 1;
 
@@ -97,16 +95,15 @@ class UnicodeSubset
 		// log.debug("UnicodeSubset.addRange() ch0=" + ch0 + " ch1=" + ch1 + " -> " + toString());
 	}
 
-	int getCharacter(int index)
-	{
+	int getCharacter(int index) {
 		int i = 0;
 
-		for (Range range: ranges)
-		{
-			if (i + range.ch1 - range.ch0 >= index)
+		for (Range range: ranges) {
+			if (i + range.ch1 - range.ch0 >= index) {
 				return range.ch0 + index - i;
-			else
+			} else {
 				i += range.ch1 - range.ch0 + 1;
+			}
 		}
 
 		log.warn("UnicodeInfo.UnicodeSubset.getCharacter() out of range index >= count (" + index + " >= " + count + ")");
@@ -115,43 +112,54 @@ class UnicodeSubset
 
 	public String toString()
 	{
-		StringBuffer buf = new StringBuffer("'" + name + "'[" + count + "]=");
-		for (Range range: ranges)
+		StringBuilder buf = new StringBuilder("'" + name + "'[" + count + "]=");
+		for (Range range: ranges) {
 			buf.append(range.ch0 + "-" + range.ch1 + ",");
+		}
 
 		return buf.toString();
 	}
+	
+	public String getRangeString() {
+		StringBuilder buf = new StringBuilder();
+		boolean first = true;
+		for (Range range: ranges) {
+			if (!first) {
+				buf.append(',');
+			} else {
+				first = false;
+			}
+			buf.append(range.toString());
+		}
+		
+		return buf.toString();
+	}
 
-	public Collection<Integer> getCharacters(int i0, int count)
-	{
+	public Collection<Integer> getCharacters(int i0, int count) {
 		ArrayList<Integer> chars = new ArrayList<Integer>();
 		int subsetIndex = 0;
 
 		Iterator<Range> rangeIter = ranges.iterator();
-		while (rangeIter.hasNext() && chars.size() < count)
-		{
+		while (rangeIter.hasNext() && chars.size() < count) {
 			Range range = rangeIter.next();
 
-			if (subsetIndex + range.ch1 - range.ch0 >= i0)
-			{
+			if (subsetIndex + range.ch1 - range.ch0 >= i0) {
 				int ch0;
 
-				if (i0 > subsetIndex)
-				{
+				if (i0 > subsetIndex) {
 					ch0 = range.ch0 + i0 - subsetIndex;
 					subsetIndex = i0;
-				}
-				else
+				} else {
 					ch0 = range.ch0;
+				}
 
-				for (int ch = ch0; ch <= range.ch1 && chars.size() < count; ch++)
-				{
+				for (int ch = ch0; ch <= range.ch1 && chars.size() < count; ch++) {
 					chars.add(ch);
 					subsetIndex++;
 				}
-			}
-			else
+			} else {
 				subsetIndex += range.ch1 - range.ch0 + 1;
+			}
 		}
 
 		log.debug("i0=" + i0 + " count=" + count + " returning " + chars);

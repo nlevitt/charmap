@@ -1,4 +1,7 @@
-MAVEN_OPTS='-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n' mvn jetty:run
+MAVEN_OPTS='-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n' mvn tomcat:run
+
+# jetty's got some bug that's making c:forEach not work on arrays right now
+# MAVEN_OPTS='-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n' mvn jetty:run
 
 fonts:
 
